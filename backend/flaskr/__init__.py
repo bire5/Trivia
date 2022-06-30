@@ -229,25 +229,21 @@ def create_app(test_config=None):
     @app.route('/quizzes')
     def play_quizzes():
         try:
-            body = request.get_json()
-            if not ('quiz_category' in body and 'previous_questions' in body):
+            data = request.get_json()
+            quiz_category= data.get('quiz_category')
+            category = Category.query.get( quiz_category)
+            previous_questions = data.get('previous_questions')
+            if 'previous_question' and 'quiz_category' in data:
                 abort(422)
-            category = body.get('quiz_category')
-            previous_questions = body.get('previous_questions')
-
-            if category['type'] == 'click':
-                next_question = Question.query.filter(
-                Question.id.not_in((previous_questions))
-                ).all()
+            if category['type'] =='click':
+                next_question = Question.query.filter_by(~Question.id.in_(previous_questions)).all()
             else:
-                next_question = Question.query.filter_by(
-                category=category['id']
-                ).filter(Question.id.not_in((previous_questions))).all()
-
+                next_question = Question.query.filter(category['id']).filter(~Question.id.in_(previous_questions)).all()
             return jsonify({
-                'success': True,
-                'Question': random.choice(next_question).format() if next_question else None,
+                "success": True,
+                "Question": random.choice(next_question) 
             })
+
         except:
             abort(422)
     """
