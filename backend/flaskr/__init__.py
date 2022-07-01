@@ -187,15 +187,15 @@ def create_app(test_config=None):
             quiz_category= data.get('quiz_category')
             category = Category.query.get( quiz_category)
             previous_questions = data.get('previous_questions')
-            if 'previous_question' and 'quiz_category' in data:
+            if not 'previous_question' and 'quiz_category' in data:
                 abort(422)
             if category['type'] =='click':
-                next_question = Question.query.filter_by(~Question.id.in_(previous_questions)).all()
+                next_question = Question.query.filter_by(Question.id.notin_(previous_questions)).all()
             else:
-                next_question = Question.query.filter(category['id']).filter(~Question.id.in_(previous_questions)).all()
+                next_question = Question.query.filter(category['id']).filter(~Question.id.notin_(previous_questions)).all()
             return jsonify({
                 "success": True,
-                "Question": random.choice(next_question) 
+                "Question": random.choice(next_question).format() if next_question else None, 
             })
 
         except:
