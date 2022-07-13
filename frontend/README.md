@@ -96,14 +96,14 @@ You can optionally update this game play to increase the number of questions or 
 {
   "questions": [
     {
-      "id": 1,
-      "question": "This is a question",
-      "answer": "This is an answer",
-      "difficulty": 5,
-      "category": 2
+      "answer": "Apollo 13",
+      "category": 5,
+      "difficulty": 4,
+      "id": 2,
+      "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
     }
   ],
-  "totalQuestions": 100,
+  "totalQuestions": 20,
   "categories": {
     "1": "Science",
     "2": "Art",
@@ -128,11 +128,11 @@ You can optionally update this game play to increase the number of questions or 
 {
   "questions": [
     {
-      "id": 1,
-      "question": "This is a question",
-      "answer": "This is an answer",
-      "difficulty": 5,
-      "category": 4
+       "answer": "Agra",
+      "category": 3,
+      "difficulty": 2,
+      "id": 15,
+      "question": "The Taj Mahal is located in which Indian city?"
     }
   ],
   "totalQuestions": 100,
@@ -167,11 +167,10 @@ You can optionally update this game play to increase the number of questions or 
 ```json
 {
   "question": {
-    "id": 1,
-    "question": "This is a question",
     "answer": "This is an answer",
-    "difficulty": 5,
-    "category": 4
+    "category": 4,
+    "id": 1,
+    "question": "What boxer's original name is Cassius Clay?"
   }
 }
 ```
