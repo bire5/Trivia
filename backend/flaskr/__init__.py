@@ -128,7 +128,7 @@ def create_app(test_config=None):
 
             return jsonify(
                 {
-                "Success": True,
+                "success": True,
                 "created": questions.id,
                 "questions": questions_view,
                 "total_qestions": len(Question.query.all()),
@@ -169,7 +169,7 @@ def create_app(test_config=None):
                 abort(404)
             filtered = paginate_questions(request, filter_questions)
             return jsonify({
-                "Success": True,
+                "success": True,
                 #"Category": Category.type,
                 "questions": filtered,
                 "total_questions": len(filter_questions),
@@ -214,41 +214,41 @@ def create_app(test_config=None):
     @app.errorhandler(404)
     def not_found(error):
         return jsonify({
-            "Success": False,
-            "Error": 404,
-            "Message": "Resource Not Found"
+            "success": False,
+            "error": 404,
+            "message": "Resource Not Found"
         }), 404
     #Catch unprocessable errors
     @app.errorhandler(422)
     def unprocessable(error):
         return jsonify({
-            "Success": False,
-            "Error": 422,
-            "Message": "Unprocessable Request"
+            "success": False,
+            "error": 422,
+            "message": "Unprocessable Request"
         }), 422
     #Bad Request error
     @app.errorhandler(400)
     def bad_request(error):
         return jsonify({
-            "Success": False,
-            "Error": 400,
-            "Message": "Bad Request"
+            "success": False,
+            "error": 400,
+            "message": "Bad Request"
         }), 400
     #Catch Method not allowed errors
     @app.errorhandler(405)
     def not_allowed(error):
         return jsonify({
-            "Success": False,
-            "Error": 405,
-            "Message": "Method Not Allowed"
+            "success": False,
+            "error": 405,
+            "message": "Method Not Allowed"
         }), 405
     #Request Timeout
     @app.errorhandler(408)
     def request_timeout(error):
         return jsonify({
-            "Success": False,
-            "Error": 408,
-            "Message": "Request Timeout"
+            "success": False,
+            "error": 408,
+            "message": "Request Timeout"
         }), 408
 
     
