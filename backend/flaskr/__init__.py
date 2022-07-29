@@ -1,3 +1,4 @@
+from asyncio import QueueEmpty
 import os
 from unicodedata import category
 from flask import Flask, request, abort, jsonify
@@ -170,10 +171,9 @@ def create_app(test_config=None):
             filtered = paginate_questions(request, filter_questions)
             return jsonify({
                 "success": True,
-                #"Category": Category.type,
                 "questions": filtered,
                 "total_questions": len(filter_questions),
-                "current_category": category.type,
+                "current_category": category.type
             })
         except:
             abort(422)
@@ -190,19 +190,21 @@ def create_app(test_config=None):
 
             quiz_category = data.get('quiz_category')
             previous_questions = data.get('previous_questions')
+            filters = Question.id.not_in((previous_questions))
 
+            #while Question.id not in previous_questions:
             if quiz_category['type'] == 'click':
-                questions = Question.query.filter(Question.id.not_in((previous_questions))).all()
+                questions = Question.query.filter(filters).all()
             else:
                 questions = Question.query.filter_by(
-                    category=quiz_category['id']).filter(Question.id.not_in((previous_questions))).all()
+                    category=quiz_category['id']).filter(filters).all()
 
             # randomly select next question from available questions
-            next_question = questions[random.randrange(0, len(questions))].format() if len(questions) > 0 else None
+            next_question = random.choice(questions).format() if len(questions) != 0 else None
 
             return jsonify({
                 'success': True,
-                'question': next_question
+                'question': next_question,
             })
         except:
             abort(422)
